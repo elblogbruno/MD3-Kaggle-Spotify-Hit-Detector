@@ -4,37 +4,70 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Day 2 - SLR</title>
-    <style>
-      * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        background-color: antiquewhite;
-      }
-      .div2 {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        padding: 30px;
-        transform: translate(-50%, -50%);
-        border: 1px solid black;
-      }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/control.js') }}"></script>
+
+    <title>Hit or Not?</title>
   </head>
+  <header>
+    <!-- Big header with logo taht says "Hit or Not?" -->
+    <!-- <div class="header">
+      <div class="header-logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Hit or Not?">
+      </div>
+    </div> -->
+  </header>
+
   <body>
-    <div class="div2">
-      <form action="http://localhost:5000" , method="POST">
-        <p>
-          Choose Ads Price that you want
-          <input type="number" name="Ads Price" min="10" max="50" /><input
-            type="submit"
-            value="OK"
-          />
-        </p>
-      </form>
-      <br />
-      <p>Prediction you get paid: ${{result}}</p>
+    <!-- <div class="div2">
+      <div>
+          <label>
+            <input id="search" type="text" required>
+            <ul>
+              <li s>s</li>
+              <li e>e</li>
+              <li a>a</li>
+              <li r>r</li>
+              <li c>c</li>
+              <li h>h</li>
+            </ul>
+          </label>
+
+          <select id="song_list"></select>
+
+          <button id="predict-song" onclick="predict()"> Predict song</button>
+      </div>
+
+      <br/>
+      <p id="prediction-result">Prediction you get paid: ${{result}}</p>
+    </div> -->
+
+    <div class="main inactive">
+      <div class="bg-main"></div>
+      <section class="search">
+        <div class="search-box">
+          <div class="introduction-text">
+            <h1>Hit or Not?</h1>
+            <p>Search your song and let AI predict that.</p>
+          </div>
+          <div class="cancel"></div>
+          <form class="search-form">
+            <div class="query-box">
+              <input class="query-input" id="query-input" type="text" autocomplete="off" name="search" placeholder="e.g. 'foals', 'queen'">
+              <div id="results">
+              </div>
+              <!-- <button id="predict-song" onclick="predict()"> Predict song</button> -->
+            </div>
+          </form>
+          <!-- <p id="prediction-result">Prediction you get paid: ${{result}}</p> -->
+        </div>
+      </section>
     </div>
+
   </body>
+
+  <script src="{{ url_for('static', filename='js/search.js') }}"></script>
+
 </html>

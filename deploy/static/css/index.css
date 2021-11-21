@@ -1,0 +1,450 @@
+/* responsive down to mobile */
+
+/* implementation based on original concept design by Clément Goebels */
+/* https://www.behance.net/gallery/33015995/Spotify-UI-redesign-concept */
+
+body {
+  margin: 0em;
+  padding: 0;
+  font-family: 'CircularBook', Helvetica, Arial, sans-serif;
+  background-size: 100% 100%;
+}
+
+.bg-main {
+  background: url(https://samratcliffe.github.io/images/spotifybg.png) no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: -1;
+}
+
+.predict-button {
+  display: inline-block;
+  border: 1px solid #666;
+  color: #ddd;
+  text-decoration: none;
+  padding: 0.7em 1.5em;
+  border-radius: 1.8em;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 0.8em;
+  letter-spacing: 0.3em;
+  background: rgba(255, 255, 255, 0);
+}
+
+.predict-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  
+}
+
+
+.main {}
+
+.search {
+  width: 97%;
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.query-box {
+  position: relative;
+  z-index: 1;
+}
+
+.search-box {
+  color: #fff;
+}
+
+.inactive .introduction-text {
+  max-height: 99em;
+  opacity: 1;
+}
+
+.introduction-text {
+  max-height: 0em;
+  opacity: 0;
+  transition: max-height 0.3s, opacity 0.3s;
+}
+
+.search-box h1 {
+  font-family: "CircularBlack";
+  font-size: 3.5em;
+  margin: 1em 0 0 0;
+  line-height: 1;
+  font-weight: normal;
+}
+
+.cancel {
+  display: inline-block;
+  vertical-align: top;
+  width: 4.7em;
+  height: 4.7em;
+  margin-top: 1em;
+  cursor: pointer;
+  opacity: 1;
+  visibility: visible;
+  background: url(https://samratcliffe.github.io/images/cancel.svg) no-repeat;
+  background-size: contain;
+  transform: translate(0em, 0);
+  transition-duration: 0.3s;
+  transition-delay: 0s;
+}
+
+.inactive .cancel {
+  opacity: 0;
+  visibility: hidden;
+  width: 0px;
+  transition-duration: 0.3s;
+  transition-delay: 0s;
+  transform: translate(2em, 0);
+}
+
+.search-form {
+  display: inline-block;
+  vertical-align: top;
+  width: calc(100% - 7em);
+  ;
+}
+
+.search-form input.inactive {
+  border: 1px solid #fff;
+  font-size: 1.25em;
+  max-width: 18em;
+  padding: 0.6em;
+}
+
+.main.inactive .search-form input {
+  border: 1px solid #fff;
+  font-size: 1.25em;
+  max-width: 18em;
+  padding: 0.6em;
+}
+
+.search-form input {
+  box-sizing: border-box;
+  font-family: 'CircularLight', Helvetica, Arial, sans-serif;
+  width: 100%;
+  max-width: 100%;
+  font-size: 5.5em;
+  background: transparent;
+  transition: all 0.3s;
+  padding: 0 0.2em;
+  color: #fff;
+  border: solid 1px transparent;
+  border-bottom: solid 1px #666;
+  margin-bottom: 0.1em;
+  outline: none;
+}
+
+.search-form #results {
+  text-align: left;
+  transform: translate(0, -1.5em);
+  overflow-y: auto;
+  transition: transform 0.2s, opacity 0.2s, visibility 0s 0.3s;
+  z-index: -1;
+  opacity: 1;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  visibility: hidden;
+}
+
+.search-form #results.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, 0em);
+  transition-delay: 0s;
+}
+
+#results ul {
+  margin: 0;
+  position: relative;
+  padding: 0em 0.7em 0.5em 0.7em;
+  color: #fff;
+  min-height: 40em;
+  flex-basis: 24.5%;
+  flex-grow: 1;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+#results.active ul {
+  opacity: 1;
+}
+
+#results ul:nth-of-type(4) {
+  transition-delay: 0.2s;
+}
+
+#results ul:nth-of-type(3) {
+  transition-delay: 0.15s;
+}
+
+#results ul:nth-of-type(2) {
+  transition-delay: 0.1s;
+}
+
+#results ul:nth-of-type(1) {
+  transition-delay: 0.05s;
+}
+
+#results ul div div {
+  display: inline-block;
+  width: 49%;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  padding: 1em 0 0.5em 0;
+  font-size: 0.75em;
+}
+
+#results ul div .title-wrap {
+  color: #888;
+}
+
+#results ul div .show-more-wrap {
+  text-align: right;
+}
+
+#results ul div .show-more-wrap a {
+  display: inline-block;
+  border: 1px solid #666;
+  color: #ddd;
+  text-decoration: none;
+  padding: 0.7em 1.5em;
+  border-radius: 1.8em;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 0.8em;
+  letter-spacing: 0.3em;
+  background: rgba(255, 255, 255, 0);
+}
+
+#results ul div .show-more-wrap a:hover {
+  border-color: #fff;
+}
+
+#results ul li:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+#results ul li {
+  list-style-type: none;
+  position: relative;
+  line-height: 1;
+  padding: 0.3em;
+  margin: 0 0 2px 0;
+  transition: background 0.2s;
+}
+
+#results ul li>div {
+  padding: 0.3em;
+  box-sizing: border-box;
+  width: calc(70% - 0.5em);
+}
+
+#results ul li>figure {
+  width: 20%;
+  margin-right: 0.5em;
+}
+
+#results ul li>figure img {
+  width: 100%;
+}
+
+#results ul li:last-child {
+  margin-bottom: 0;
+}
+
+#results.active ul li {
+  opacity: 1;
+  transform: translate(0, 0em) rotateX(0deg);
+}
+
+#results li > figure,
+#results li > div {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+}
+
+#results ul li p {
+  margin: 0;
+  padding: 0.2em 0;
+  line-height: 1.2;
+}
+
+#results ul li>a {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+#results ul li a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#results ul li a:hover {
+  text-decoration: underline;
+}
+
+#results ul.artists li:first-of-type .item-title {
+  font-size: 1.375em;
+}
+
+p.item-title {
+  font-family: "CircularBook";
+}
+
+#results ul.artists li:first-of-type .item-title a {
+  color: #fff;
+}
+
+p.item-subtitle {
+  color: #666;
+  font-family: "CircularLight";
+  text-transform: capitalize;
+}
+
+
+/* Artists */
+
+#results ul.artists li figure div {
+  width: 100%;
+  padding-bottom: 100%;
+  height: 0;
+  position: relative;
+}
+
+#results ul.artists li {
+  margin-bottom: 1.5em;
+}
+
+#results ul.artists li:first-of-type figure {
+  width: 27%;
+}
+
+#results ul.artists li>figure div img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+}
+
+
+/*Playlists */
+
+#results ul.playlists li figure {
+  display: none;
+}
+
+#results ul.playlists {
+  flex-basis: 20%;
+}
+
+#results ul.playlists div .show-more-wrap a {
+  display: none;
+}
+
+
+/*Tracks*/
+
+#results ul.tracks {
+  flex-basis: 30%;
+}
+
+#results ul.tracks li>div>a {
+  width: 2em;
+  display: inline-block;
+  height: 2em;
+  border: 1px solid #aaa;
+  position: absolute;
+  border-radius: 50%;
+  right: 0.5em;
+  top: 50%;
+  opacity: 0;
+  transform: translate(0%, -50%);
+  transition: opacity 0.3s, background-color 0.2s;
+  background: url(https://samratcliffe.github.io/images/play.svg) no-repeat;
+  background-color: rgba(255, 255, 255, 0.0);
+  background-size: 1em 1em;
+  background-position: 58% 50%;
+}
+
+#results ul.tracks li:hover>div>a {
+  opacity: 1;
+  transition-delay: 0.2s;
+}
+
+#results ul.tracks li>div>a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transition-delay: 0s;
+}
+
+#results ul.tracks li {
+  padding-right: 2.3em;
+}
+
+
+/*Albums */
+
+#results ul.albums li {
+  position: absolute;
+  transition: transform 0.3s;
+  transform-origin: top;
+  width: 84%;
+  left: 8%;
+  box-sizing: border-box;
+  font-size: 1.25em;
+}
+
+#results ul.albums li figure {
+  width: 100%;
+}
+
+#results ul.albums li:nth-of-type(1) {
+  transform: scale(0.8);
+  margin-top: 0;
+}
+
+#results ul.albums li:nth-of-type(2) {
+  transform: scale(0.9);
+  margin-top: 2em;
+}
+
+#results ul.albums li:nth-of-type(3) {
+  transform: scale(1);
+  margin-top: 4em;
+}
+
+#results ul.albums li:not(:last-of-type) p {
+  display: none;
+}
+
+@media only screen and (max-width:1024px) {
+  #results ul.playlists {
+  display:none;
+}
+}
+@media only screen and (max-width:768px) {
+  #results {
+    flex-flow: column;
+  }
+  #results ul {
+    width:100%;
+    box-sizing:border-box;
+    min-height:auto;
+  }
+  #results ul.albums {
+  display:none;
+}
+}
