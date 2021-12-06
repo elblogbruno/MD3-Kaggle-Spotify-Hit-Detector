@@ -5,44 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/stadistics.css') }}">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
+
     <script src="{{ url_for('static', filename='js/control.js') }}"></script>
 
     <title>Hit or Not?</title>
   </head>
-  <header>
-    <!-- Big header with logo taht says "Hit or Not?" -->
-    <!-- <div class="header">
-      <div class="header-logo">
-        <img src="{{ url_for('static', filename='logo.png') }}" alt="Hit or Not?">
-      </div>
-    </div> -->
-  </header>
 
   <body>
-    <!-- <div class="div2">
-      <div>
-          <label>
-            <input id="search" type="text" required>
-            <ul>
-              <li s>s</li>
-              <li e>e</li>
-              <li a>a</li>
-              <li r>r</li>
-              <li c>c</li>
-              <li h>h</li>
-            </ul>
-          </label>
-
-          <select id="song_list"></select>
-
-          <button id="predict-song" onclick="predict()"> Predict song</button>
-      </div>
-
-      <br/>
-      <p id="prediction-result">Prediction you get paid: ${{result}}</p>
-    </div> -->
 
     <div class="main inactive">
       <div class="bg-main"></div>
@@ -53,20 +25,57 @@
             <p>Search your song and let AI predict that.</p>
           </div>
           <div class="cancel"></div>
-          <form class="search-form">
+          <div class="search-form">
             <div class="query-box">
               <input class="query-input" id="query-input" type="text" autocomplete="off" name="search" placeholder="e.g. 'foals', 'queen'">
               <div id="results">
               </div>
+              <p id='error-message-text' style='display: none;'> Error text </p>
+
               <!-- <button id="predict-song" onclick="predict()"> Predict song</button> -->
             </div>
-          </form>
-          <!-- <p id="prediction-result">Prediction you get paid: ${{result}}</p> -->
+          </div>
+          
+          {% if entry %}
+          <div class="introduction-text">
+            <h2>Fancy Some stadistics?</h2>
+          </div>
+          <div class="model-stadistics">
+            <div class="model-stadistics-box">
+              <div class="model-stadistics-item">
+                <p>Songs Added</p>
+                <p id="recall">{{ entry.model_updated_new_songs_number }} new songs added </p>
+              </div>
+              <div class="model-stadistics-item">
+                <p>Accuracy</p>
+                <p id="accuracy">{{ entry.model_updated_accuracy }} %</p>
+              </div>
+              <div class="model-stadistics-item">
+                <p>Precision</p>
+                <p id="precision">{{ entry.model_updated_precission }} %</p>
+              </div>
+              <div class="model-stadistics-item">
+                <p>Recall</p>
+                <p id="recall">{{ entry.model_updated_recall }} %</p>
+              </div>
+              <div class="model-stadistics-item">
+                <p>F1 Score</p>
+                <p id="recall">{{ entry.model_updated_f1_score }} %</p>
+              </div>
+            </div> 
+          </div> 
+          {% endif %}
         </div>
       </section>
     </div>
 
   </body>
+
+  <footer>
+    <div>
+      Website created by Bruno, inspired by this kaggle dataset: 
+    </div>
+  </footer>
 
   <script src="{{ url_for('static', filename='js/search.js') }}"></script>
 

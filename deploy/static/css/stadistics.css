@@ -1,0 +1,30 @@
+.model-stadistics{
+    /* center div*/
+    margin: 0 auto;
+    /* width */
+    width: 100%;
+    /* height */
+    height: 100%;
+    /* border */
+    border: 1px solid #ccc;
+    /* box-shadow */
+    box-shadow: 2px 2px 2px #ccc;
+}
+
+.model-stadistics-box{
+    /* box that holds the charts */
+    /* width */
+    width: 100%;
+    /* height */
+    height: 100%;
+    /* border */
+    border: 1px solid #ccc;
+    /* box-shadow */
+    box-shadow: 2px 2px 2px #ccc;
+
+
+}
+
+.model-stadistics-item{
+
+}

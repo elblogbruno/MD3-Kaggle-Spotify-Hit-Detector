@@ -23,11 +23,22 @@ function listItem() {
         var subtitle = document.createElement("p");
         var anchor = document.createElement("a");
         var imgAnchor = document.createElement("a");
+
+        /* predict buttons and result*/
         var predictButton = document.createElement("button");
+        var predictResultText = document.createElement("p");
+        predictResultText.textContent = 'No result';
+        predictResultText.id = this.id+'-predict-result-text';        
         predictButton.className = "predict-button";
-        predictButton.innerHTML = "Predict";
+        predictButton.id = this.id+"-predict-button";
+        predictButton.textContent = "Predict";
+
+        var href = this.href;
+        var id = this.id;
+        var release_date = this.release_date;
+        predictButton.onclick = function() { predict(href, id, release_date); }
+
         img.src = this.src === 0 ? "https://samratcliffe.github.io/images/placeholder.jpg" : this.src;
-        predictButton.onclick = predict(this.src);
         anchor.href = imgAnchor.href = this.href;
         anchor.target = imgAnchor.target = "_blank";
         title.classList.add("item-title");
@@ -42,7 +53,8 @@ function listItem() {
         divImage.appendChild(divImageWrap);
         li.appendChild(divImage);
         li.appendChild(divDesc);
-        li.appendChild(predictButton);
+        divDesc.appendChild(predictResultText);
+        divDesc.appendChild(predictButton);
         return li;
     }
 }
@@ -50,6 +62,8 @@ function listItem() {
 function resultListItem(resultItem) {
 this.title = "<a target='_blank' href='" + resultItem.external_urls.spotify + "'>" + (resultItem.name.length > 45 ? resultItem.name.substr(0, 45) + "…" : resultItem.name) + "</a>";
 this.href = resultItem.external_urls.spotify;
+this.id = resultItem.id;
+this.release_date = resultItem.album.release_date;
 switch (resultItem.type) {
     case "artist":
     this.subtitle = Number(resultItem.followers.total).toLocaleString() + " listeners";

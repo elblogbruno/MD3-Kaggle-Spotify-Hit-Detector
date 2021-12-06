@@ -6,7 +6,7 @@ $( document ).ready(function() {
 });
 
 function subscribe_event(){
-    document.getElementById("query-input").addEventListener("input", function(){
+    document.getElementById("query-input").addEventListener("change", function(){
         // api request to flask server to get the possible song list for the query
         console.log("searching for " + this.value);
     
@@ -18,21 +18,13 @@ function subscribe_event(){
             data: {'query': this.value},
             success: function (data) {
                 console.log(data);
-                // var song_list = data;
-                // var song_list_html = "";
-                // for (var i = 0; i < song_list.length; i++) {
-                //     // if song is the first one, as a default, select it
-                //     if (i == 0)
-                //         song_list_html += "<option value='" + song_list[i]['uri'] + "' selected>" + song_list[i]['name'] + "</option>";
-                //     else
-                //         song_list_html += "<option value='" + song_list[i]['uri'] + "'>" + song_list[i]['name'] + "</option>";
-                //     // add image to the list
-                //     song_list_html += "<img src='" + song_list[i]['album']['images'][0]['url'] + "'>";
-
-                // }
-                // document.getElementById("results").innerHTML = song_list_html;
-
-                writeResults(data);
+                if (data['error'])
+                {
+                    document.getElementById('error-message-text').style.display = 'block';
+                    document.getElementById('error-message-text').textContent = data['result'];
+                }else{
+                    writeResults(data['result']);
+                }
             },
             error: function (xhr, exception) {
                 var msg = "";
@@ -52,14 +44,16 @@ function subscribe_event(){
                     msg = "Error:" + xhr.status + " " + xhr.responseText;
                 }
                
+                document.getElementById('error-message-text').style.display = 'block';
+                document.getElementById('error-message-text').textContent = msg;
             }
         }); 
     });
 }
 
-function predict(song_uri){
+function predict(song_uri, song_id, release_date){
     // api request to flask server to get the possible song list for the query
-    console.log("Predicting for " + song_uri);
+    console.log("Predicting for " + song_uri + " " + song_id + " " + release_date);
     
     // get the song uri
     // var song_uri = document.getElementById("song_list").value;
@@ -69,13 +63,16 @@ function predict(song_uri){
         dataType: "json",
         type: "Post",
         async: true,
-        data: {'query': song_uri},
+        data: {'query': song_uri, 'release_date': release_date},
         success: function (data) {
+            document.getElementById('error-message-text').style.display = 'none';
+
             console.log(data);
-            if (data == 0)
-                document.getElementById("prediction-result").innerHTML = "This song will be a flop! ):";
+            console.log(song_id);
+            if (data == '0')
+                document.getElementById(song_id+"-predict-result-text").innerHTML = "This song will be a flop! ):";
             else
-                document.getElementById("prediction-result").innerHTML = "This song will be a hit! :)";
+                document.getElementById(song_id+"-predict-result-text").innerHTML = "This song will be a hit! :)";
         },
         error: function (xhr, exception) {
             var msg = "";
@@ -94,7 +91,8 @@ function predict(song_uri){
             } else {
                 msg = "Error:" + xhr.status + " " + xhr.responseText;
             }
-            
+            document.getElementById('error-message-text').style.display = 'block';
+            document.getElementById('error-message-text').textContent = msg;
         }
     }); 
 }
