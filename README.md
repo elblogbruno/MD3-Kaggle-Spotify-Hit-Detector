@@ -19,10 +19,12 @@ The repository holds the source code of the website https://hitornot.ml/ develop
     
 | Metric Name | Value |
 | ------------- | ------------- |
-| Accuracy | Contenido de la celda  |
-| Precision  | Contenido de la celda  |
-| Recall  | Contenido de la celda  |
-| F1 Score  | Contenido de la celda  |
+| Accuracy | 80.0097  |
+| Precision  | 77.4030  |
+| Recall  | 84.7077  |
+| F1 Score  | 0.8089  |
+| MSE  | 0.1999  |
+
         
 - The website saves the song you search as input data to retrain the model itself so it learns by user new input as well!
 - Jupyter notebook inside with an explanation of the Dataset and my current aproachment to it with an stadistic model!
