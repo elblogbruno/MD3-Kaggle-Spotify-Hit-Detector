@@ -28,12 +28,15 @@ The repository holds the source code of the website https://hitornot.ml/ develop
         
 - The website saves the song you search as input data to retrain the model itself so it learns by user new input as well!
 - Jupyter notebook inside with an explanation of the Dataset and my current aproachment to it with an stadistic model!
+
 ## Folder Structure
 
 - Src contains the model code
+  - You can run model_test.py to test the model and get accuracies.
 - Deploy contains the website code
-- Jupyter Notebook available at root folder.
-## Run Locally
+- Jupyter Notebook available at root folder. (md3-spotify-hit-or-not.ipynb)
+
+## Run Website Locally
 
 Clone the project
 
