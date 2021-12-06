@@ -1,2 +1,9 @@
 nltk
-
+scikit-learn
+pandas
+matplotlib
+seaborn
+numpy
+Flask
+Flask-SQLAlchemy
+spotipy
