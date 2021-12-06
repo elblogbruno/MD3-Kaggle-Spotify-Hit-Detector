@@ -1,5 +1,5 @@
 
-![Logo](https://storage.googleapis.com/kaggle-datasets-images/496640/921902/81ae73e8227fabcea2700c0b76e03471/dataset-cover.jpg?t=2020-02-01-09-21-47)
+![Logo](dataset-cover.jpg)
 
     
 # The Spotify Hit Predictor Dataset (1960-2019)
