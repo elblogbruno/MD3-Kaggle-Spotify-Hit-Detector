@@ -11,7 +11,7 @@ from sklearn.model_selection import cross_val_predict, train_test_split, Paramet
 from sklearn.preprocessing import StandardScaler, Normalizer, RobustScaler
 
 import joblib
-import nltk
+
 # Visualitzarem només 3 decimals per mostra
 pd.set_option('display.float_format', lambda x: '%.3f' % x)
 
@@ -27,36 +27,7 @@ print(dataset_full.isnull().sum())
 
 # dataset_train, dataset_test, dataset_validate = get_dataset_flushed(train_size=0.8, validate_size=0.0, columns_to_drop=columns_to_drop)
 
-# tokens = [t for t in dataset_full['track']]
 
-# print(len(tokens))
-
-# freq = nltk.FreqDist(tokens)
-
-# freq = freq.most_common(5)
-
-# # for key in freq:
-
-# #     print (str(key[0]))
-# #     # dat = dataset_full[dataset_full['track'] == key]
-# #     hits = len(dataset_full[(dataset_full['target'] == 1) & (dataset_full['track'] == key[0])])
-# #     flops = len(dataset_full[(dataset_full['target'] == 0) & (dataset_full['track'] == key[0])])
-# #     print("Word {0} has {1} hits".format(key[0], hits))
-# #     print("Word {0} has {1} flops".format(key[0], flops))
-# print(dataset_full.isnull().sum())
-# def decide(x, freq):
-#        # print(x)
-#        for word in x:
-#               if word in freq:
-#                      return 1
-#        return 0
-
-
-# dataset_full.insert(0, 'top10', '')
-# # add a new column with a 1 if the track name is in the top 10 most common words
-# dataset_full['top10'] = dataset_full['track'].apply(lambda x: decide(x, freq))
-
-# dataset_full.drop(['track'], axis=1, inplace=True)
 
 # #add new column with the number of hits per song
 # # dataset_full['hits'] = dataset_full.apply(lambda row: len(dataset_full[(dataset_full['target'] == 1) & (dataset_full['track'] == row['track'])]), axis=1)

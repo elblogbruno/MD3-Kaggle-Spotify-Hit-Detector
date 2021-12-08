@@ -76,6 +76,7 @@ Start the server
 
  - [@samratcliffe](https://codepen.io/samratcliffe/pen/xOqEZg) for its search design I used on the website.
  - [theoverman](https://www.kaggle.com/theoverman) at [Kaggle](https://www.kaggle.com/theoverman/the-spotify-hit-predictor-dataset) for creating this dataset I really enjoyed working on! I am a music nerd.
+ - [annekaosmun](https://www.kaggle.com/annekaosmun/predicting-hit-songs-using-spotify) inspiration for the jupyter notebook.
 
 ## Feedback
 

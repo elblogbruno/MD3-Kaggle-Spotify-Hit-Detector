@@ -35,7 +35,7 @@ def result():
         print(song_features)
         prediction = predict_value(song_features)
         print(prediction)
-        save_new_entry(release_date,  song_features, prediction) # Save the new entry in the database
+        # save_new_entry(release_date,  song_features, prediction) # Save the new entry in the database
         return str(prediction)
 
 
