@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  md3spotify:
+    image: md3spotify
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5003:5003

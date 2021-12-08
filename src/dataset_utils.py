@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from scipy.sparse import data
 
 # Funcio per a llegir dades en format csv
 def load_dataset(path):

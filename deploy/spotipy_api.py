@@ -23,9 +23,9 @@ def get_data_for_new_song(song_id):
 
     features = spotify.audio_features(song_id)
 
-    chorus_hit = features[0]['sections'][2]['start']
+    chorus_hit = features['sections'][2]['start']
 	
-    sections = len(features[0]['sections'])
+    sections = len(features['sections'])
 
     features[0]['chorus_hit'] = chorus_hit
     features[0]['sections'] = sections
