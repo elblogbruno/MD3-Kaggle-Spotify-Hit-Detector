@@ -25,8 +25,8 @@ def get_data_for_new_song(song_id):
 
     resp_analysis = spotify.audio_analysis(song_id) 
     
-	chorus_hit = resp_analysis['sections'][2]['start']
-	sections = len(resp_analysis['sections'])
+    chorus_hit = resp_analysis['sections'][2]['start']
+    sections = len(resp_analysis['sections'])
 
 
     features[0]['chorus_hit'] = chorus_hit
