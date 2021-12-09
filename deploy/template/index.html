@@ -5,13 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/footer.css') }}">
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/stadistics.css') }}">
 
     <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js') }}"></script>
 
     <script src="{{ url_for('static', filename='js/control.js') }}"></script>
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <title>Hit or Not?</title>
+
+    
   </head>
 
   <body>
@@ -72,9 +78,21 @@
   </body>
 
   <footer>
-    <div>
-      Website created by Bruno, inspired by this kaggle dataset: 
+    <div class="footer-container">
+      <div class="footer-item">
+        <p>Made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://www.brunomoya.com" target="_blank">Bruno Moya</a></p>
+      </div>
+      
+      <div class="footer-item">
+        <p>Source code available on <a href="https://github.com/elblogbruno/MD3-Kaggle-Spotify-Hit-Detector" target="_blank">Github</a></p>
+      </div>
+
+      <div class="footer-item">
+        <p>Thanks <a href="https://codepen.io/samratcliffe/pen/xOqEZg" target="_blank">@samratcliffe</a> for the website design</p>
+      </div>
+
     </div>
+
   </footer>
 
   <script src="{{ url_for('static', filename='js/search.js') }}"></script>

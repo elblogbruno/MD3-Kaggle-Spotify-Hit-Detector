@@ -1,13 +1,15 @@
 /* Functional, Memoized, cached, and object-oriented spotify search. written in vanilla js.
  */
   
-function writeResults(results) {
+function writeResults(results, index) {
     console.log(results);
     var output = document.getElementById("results");
     output.innerHTML = "";
     
+    // this.search_query = document.getElementById("query-input");
+    console.log("Index writeresults: " + index);
     var items = results['tracks']['items'];
-    var update = new resultList('track', items).render();
+    var update = new resultList('track', items, index).render();
     // var domElement = document.getElementsByClassName(resultType);
     output.appendChild(update);
 }
@@ -15,21 +17,28 @@ function writeResults(results) {
 function listItem() {
     this.render = function() {
         var li = document.createElement("li");
+        li.className = "list-item";
         var divImage = document.createElement("figure");
+        divImage.style.gridArea = "image";
         var divImageWrap = document.createElement("div");
         var divDesc = document.createElement("div");
+        divDesc.style.gridArea = "description";
         var img = document.createElement("img");
         var title = document.createElement("p");
         var subtitle = document.createElement("p");
         var anchor = document.createElement("a");
         var imgAnchor = document.createElement("a");
 
+        var butDiv = document.createElement("div");
+        butDiv.classList.add("ui-prediction-div");
+        butDiv.style.gridArea = "prediction";
+
         /* predict buttons and result*/
         var predictButton = document.createElement("button");
         var predictResultText = document.createElement("p");
         predictResultText.textContent = 'No result';
         predictResultText.id = this.id+'-predict-result-text';        
-        predictButton.className = "predict-button";
+        predictButton.className = "ui-prediction-button";
         predictButton.id = this.id+"-predict-button";
         predictButton.textContent = "Predict";
 
@@ -37,6 +46,23 @@ function listItem() {
         var id = this.id;
         var release_date = this.release_date;
         predictButton.onclick = function() { predict(href, id, release_date); }
+        
+        var agreeButton = document.createElement("button");
+        agreeButton.style.display = "none";
+        agreeButton.className = "ui-prediction-button";
+        agreeButton.id = this.id+"-agree-button";
+        agreeButton.innerHTML = "<i class='fa fa-thumbs-up'> Agree</i>";
+        agreeButton.onclick = function() { like(href, id); }
+
+        var disagreeButton = document.createElement("button");
+        disagreeButton.style.display = "none";
+        disagreeButton.className = "ui-prediction-button";
+        disagreeButton.id = this.id+"-disagree-button";
+        disagreeButton.innerHTML = "<i class='fa fa-thumbs-down'> Disagree</i>";
+        disagreeButton.onclick = function() { dislike(href, id); }
+
+
+
 
         img.src = this.src === 0 ? "https://samratcliffe.github.io/images/placeholder.jpg" : this.src;
         anchor.href = imgAnchor.href = this.href;
@@ -51,10 +77,22 @@ function listItem() {
         divDesc.appendChild(subtitle);
         divDesc.appendChild(anchor);
         divImage.appendChild(divImageWrap);
-        li.appendChild(divImage);
-        li.appendChild(divDesc);
-        divDesc.appendChild(predictResultText);
-        divDesc.appendChild(predictButton);
+        
+        div1 = document.createElement("div");
+        div1.classList.add("ui-description-div");
+        div1.style.gridArea = "info-panel";
+        div1.appendChild(divImage);
+        div1.appendChild(divDesc);
+        
+        li.appendChild(div1);
+
+        // li.appendChild(divImage);
+        // li.appendChild(divDesc);
+        butDiv.appendChild(predictResultText);
+        butDiv.appendChild(predictButton);
+        butDiv.appendChild(agreeButton);
+        butDiv.appendChild(disagreeButton);
+        li.appendChild(butDiv);
         return li;
     }
 }
@@ -88,9 +126,12 @@ switch (resultItem.type) {
 }
 resultListItem.prototype = new listItem();
 
-function resultList(name, results) {
+function resultList(name, results, index) {
     this.name = name;
     this.results = results;
+    this.index = index;
+    console.log('result ' + this.index);
+
     //render
     this.render = function() {
         var ul = document.createElement("ul");
@@ -100,9 +141,10 @@ function resultList(name, results) {
         titleWrap.classList.add("title-wrap");
         showMoreWrap.classList.add("show-more-wrap");
         ul.classList.add(this.name);
-        var showMore = document.createElement("a");
+        var showMore = document.createElement("button");
+        showMore.className = "ui-prediction-button";
         showMore.innerHTML = "SHOW MORE";
-        showMore.href = "javascript:void(0)";
+        showMore.onclick = function() { console.log('showing more: ' + index); getQuery(document.getElementById("query-input").value, index); }
         var header = document.createElement("p");
         header.innerHTML = this.name;
         titleWrap.appendChild(header);
@@ -125,6 +167,7 @@ search.addEventListener("keyup", function(e) {
     var results = document.getElementById("results");
     results.classList = query === "" ? "" : "active";
     //searchLibrary(query);
+    // alert(query);
 });
 search.addEventListener("focus", function(e) {
     var main = document.getElementsByClassName("main")[0];
@@ -151,5 +194,6 @@ function cancelInput() {
     main.classList.add("inactive");
     search.value = '';
     document.getElementById("results").classList = "";
+    document.getElementById("results").innerHTML = "";
     search.blur();
 }

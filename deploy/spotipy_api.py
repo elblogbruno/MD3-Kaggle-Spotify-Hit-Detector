@@ -38,10 +38,10 @@ def get_data_for_new_song(song_id):
 """
 Query the Spotify API for a query and return a list of songs that match the query.
 """
-def query_spotify(query):
+def query_spotify(query, index):
     try:
-        results = spotify.search(query, limit=5, type='track')
-        print(results)
+        results = spotify.search(query, limit=5, type='track', offset=index)
+        print("Index: " + str(index))
         return results, False
     except requests.exceptions.ReadTimeout as e:
         return str(e), True

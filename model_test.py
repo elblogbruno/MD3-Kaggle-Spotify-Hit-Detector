@@ -13,8 +13,8 @@ dataset_full = generate_dataset(type='nlp')
 sns.heatmap(dataset_full.corr(), cmap="YlGnBu", annot=True)
 plt.tight_layout()
 plt.show()
-# x_train, x_test, y_train, y_test = get_train_test(dataset_train, dataset_test, dataset_validate)
 
+# x_train, x_test, y_train, y_test = get_train_test(dataset_train, dataset_test, dataset_validate)
 x_train, x_test, y_train, y_test = get_train_test(dataset_full=dataset_full)
 
 

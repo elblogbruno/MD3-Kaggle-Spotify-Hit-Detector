@@ -10,7 +10,27 @@ def predict_value(to_predict_list):
     print(to_predict)
     loaded_model = joblib.load('model-spotify.sav')
     result = loaded_model.predict(to_predict)
-    return result[0]
+
+    # predictions = loaded_model.predict_proba(to_predict)
+    # # print(predictions)
+    # #get the index of the maximum probability
+    # max_index = np.argmax(predictions)
+    # #get the class with the maximum probability
+    # max_probability = predictions[max_index]
+    # # #get the class name
+    # # max_probability_class = loaded_model.classes_[max_index]
+    # # print(max_probability_class)
+    # print("Probability of both classes: " + str(max_probability))
+    # print("Probability flop: " + str(max_probability[0]))
+    # print("Probability hit: " + str(max_probability[1]))
+
+    # get probability of each class
+    predictions = loaded_model.predict_proba(to_predict)
+    print(predictions)
+    print(predictions[0][0])
+    print(predictions[0][1])
+
+    return result[0], predictions[0][0], predictions[0][1]
 
 def extract_decade_from_date(release_date):
     release_date = datetime.strptime(release_date, '%Y-%m-%d')

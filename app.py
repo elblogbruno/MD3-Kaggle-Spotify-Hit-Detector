@@ -21,9 +21,23 @@ def get_spotify_query_result():
     if request.method == 'POST':
         print("Request received")
         print(request.form)
-        query = request.form['query']
-        result, error = query_spotify(query)
-        return jsonify(result=result, error=error)
+        if request.form['query'] == "":
+            return jsonify({"error": "Please enter a query"})
+        else:
+            query = request.form['query']
+        
+        if 'index' in request.form:
+            index = int(request.form['index'])
+        else:
+            index = 0
+
+        result, error = query_spotify(query, index)
+
+        print(index)
+
+        index += 5
+
+        return jsonify(result=result, error=error, index=index)
 
 @app.route('/get_prediction_for_song', methods=['POST', 'GET'])
 def result():
@@ -33,10 +47,12 @@ def result():
 
         song_features = get_data_for_new_song(song_id)
         print(song_features)
-        prediction = predict_value(song_features)
-        print(prediction)
+        prediction, flop_percent, hit_percent  = predict_value(song_features)
+        
+        flop_percent = round(flop_percent, 2)*100
+        hit_percent = round(hit_percent, 2)*100
         # save_new_entry(release_date,  song_features, prediction) # Save the new entry in the database
-        return str(prediction)
+        return jsonify(prediction=str(prediction), flop_percent=str(flop_percent), hit_percent=str(hit_percent))
 
 
 if __name__ == '__main__':
