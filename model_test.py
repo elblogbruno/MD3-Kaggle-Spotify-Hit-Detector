@@ -5,22 +5,24 @@ import joblib
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# dataset_train, dataset_test, dataset_validate, dataset_full = generate_dataset(type='non-nlp')
+dataset_train, dataset_test, dataset_validate, dataset_full = generate_dataset(type='non-nlp')
 
-dataset_full = generate_dataset(type='nlp')
+# dataset_full = generate_dataset(type='nlp')
 
 # show heatmap
 sns.heatmap(dataset_full.corr(), cmap="YlGnBu", annot=True)
 plt.tight_layout()
 plt.show()
 
-# x_train, x_test, y_train, y_test = get_train_test(dataset_train, dataset_test, dataset_validate)
-x_train, x_test, y_train, y_test = get_train_test(dataset_full=dataset_full)
+x_train, x_test, y_train, y_test = get_train_test(dataset_train, dataset_test, dataset_validate)
+# x_train, x_test, y_train, y_test = get_train_test(dataset_full=dataset_full)
 
 
-RF, y_pred = train_model(x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test, model_name='RF')
+# RF, y_pred = train_model(x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test, model_name='RF')
 
-accuracy, precision, recall, f1 = evaluate_model(x_train, x_test, y_train, y_test, y_pred, RF)
+score = hyperparameter_search(x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test, model_name='RF')
 
-filename = 'deploy/model-spotify.sav'
-joblib.dump(RF, filename)
+# accuracy, precision, recall, f1 = evaluate_model(x_train, x_test, y_train, y_test, y_pred, RF)
+
+# filename = 'deploy/model-spotify.sav'
+# joblib.dump(RF, filename)
