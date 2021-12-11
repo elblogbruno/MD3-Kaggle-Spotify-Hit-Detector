@@ -7,10 +7,10 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-def generate_nlp_dataset():
+def generate_nlp_dataset(load_cache=False):
        # we do this so we don't need to generate the same csv all the time 
        # it takes lot of tie to do so.
-       if os.path.isfile('data/dataset_full_token.csv'):
+       if os.path.isfile('data/dataset_full_token.csv') and load_cache:
               return load_dataset('data/dataset_full_token.csv')
        else:
               columns_to_drop  = ['uri']
@@ -85,19 +85,26 @@ def generate_nlp_dataset():
               # dataset_full_tfidf = tfidf_transformer.fit_transform(dataset_full_counts)
               # print(dataset_full_tfidf)
               # print(dataset_full_tfidf.shape)
-
+              x = dataset_full['track']
               # settings that you use for count vectorizer will go here 
-              tfidf_vectorizer=TfidfVectorizer(use_idf=True) 
+              # vectorizer = CountVectorizer(analyzer=lambda x: x) 
+              vectorizer = TfidfVectorizer(analyzer=lambda x: x.split()) 
               
-              # just send in all your docs here 
-              tfidf_vectorizer_vectors=tfidf_vectorizer.fit_transform(dataset_full['track'].values)
+              # print("Vectorizer")
+              # print(dataset_full['track'])
 
-              # get the first vector out (for the first document) 
-              first_vector_tfidfvectorizer=tfidf_vectorizer_vectors[0] 
-              
+              tfidf_matrix = vectorizer.fit_transform(x)
+              feature_names = vectorizer.get_feature_names()
+              dense = tfidf_matrix.todense()
+              array = tfidf_matrix.toarray()
+              # denselist = dense.tolist()
+
+              tfidf_df = pd.DataFrame(dense, columns=feature_names)
+              tfidf_df.to_csv('data/dataset_full_tfidf.csv')
+
               dataset_full.insert(0, 'tfidf', '')
               # place tf-idf values in dataset-full as a column
-              dataset_full['tfidf'] = first_vector_tfidfvectorizer.getnnz()
+              dataset_full['tfidf'] = array
 
               dataset_full.drop(['track', 'artist'], axis=1, inplace=True)     
 

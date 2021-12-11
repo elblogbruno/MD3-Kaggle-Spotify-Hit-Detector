@@ -37,9 +37,15 @@ The repository holds the source code of the website https://hitornot.ml/ develop
 
 - Src contains the model code
   - You can run model_test.py to test the model and get accuracies.
+  - Inside model_test, you can pass any data and it will automatically train with the best model and print metrics on screen.
 - Deploy contains the website code
 - Jupyter Notebook available at root folder. (md3-spotify-hit-or-not.ipynb)
 
+## Run Demo
+
+You can run model_test.py and modify it to pass your own data and it will automatically run a demo with the best model I have found and will evaluate it. You can understand this as the python code demo instead of the actual website.
+
+Best model was saved using Joblib, and you can find it inside model/model-spotify.sav.
 ## Run Website Locally
 
 Clone the project
@@ -65,6 +71,9 @@ Start the server
 ```bash
   cd deploy && python app.py
 ```
+
+Don't forget setting your own Spotify Credentials inside deploy/spotipy_api.py
+More info here: https://spotipy.readthedocs.io/en/2.19.0/#getting-started
 
   
 ## Tech Stack

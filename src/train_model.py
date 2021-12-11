@@ -15,6 +15,11 @@ def split_dataset(dataset):
     dataset_train, dataset_test, dataset_validate = train_test_split(dataset, test_size=0.2, random_state=0)
     return dataset_train, dataset_test, dataset_validate
 
+def get_x_y(dataset):
+    x = dataset.drop(['target'], 1).values  # values converts it into a numpy array
+    y = dataset['target'].values.ravel()  # -1 means that calculate the dimension of rows, but have 1 column
+    return x, y
+
 def get_train_test(dataset_train=None, dataset_test=None, dataset_validate=None, dataset_full=None):
     if dataset_full is not None:
         x = dataset_full.drop(['target'], 1).values  # values converts it into a numpy array
