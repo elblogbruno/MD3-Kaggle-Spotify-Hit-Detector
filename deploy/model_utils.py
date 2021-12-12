@@ -8,7 +8,7 @@ from deploy.database.model import *
 def predict_value(to_predict_list):
     to_predict = np.array(to_predict_list).reshape(-1, 1)
     print(to_predict)
-    loaded_model = joblib.load('model-spotify.sav')
+    loaded_model = joblib.load('model/model-spotify-full-dataset.sav')
     result = loaded_model.predict(to_predict)
 
     # predictions = loaded_model.predict_proba(to_predict)
