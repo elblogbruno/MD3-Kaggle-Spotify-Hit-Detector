@@ -4,13 +4,14 @@ from spotipy.oauth2 import SpotifyOAuth
 import pandas as pd
 from deploy.model_utils import extract_decade_from_date
 
-SPOTIPY_CLIENT_ID="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-SPOTIPY_CLIENT_SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-SPOTIPY_REDIRECT_URI="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-SPOTIFY_USERNAME = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+SPOTIPY_CLIENT_ID="72cabe0979d64c2a89165d1e08fb1af1"
+SPOTIPY_CLIENT_SECRET="a165cbac7b7b444289dcb00669bf5444"
+SPOTIPY_REDIRECT_URI="https://www.elblogdebruno.com"
+SPOTIFY_USERNAME = "unoplays"
 
 sp_oauth = SpotifyOAuth(username=SPOTIFY_USERNAME, client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET, redirect_uri=SPOTIPY_REDIRECT_URI)
 auth_url = sp_oauth.get_authorize_url()
+print(auth_url)
 spotify = spotipy.Spotify(auth_manager=sp_oauth)
 
 
