@@ -172,7 +172,7 @@ def get_full_dataset(columns_to_drop=['track', 'artist', 'uri']):
     dataset_train.to_csv('data/dataset_joined_full.csv')
     # dataset_test.to_csv('data/dataset_test_joined.csv')
 
-    print("COLUMNS: " + dataset_train.columns)
+    # print("COLUMNS: " + dataset_train.columns)
 
 
     return dataset_train

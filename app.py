@@ -98,8 +98,7 @@ def result():
         song_id = request.form['query']
         release_date =  request.form['release_date']
 
-        song_features = get_data_for_new_song(song_id)
-        print(song_features)
+        song_features = get_data_for_new_song(song_id, release_date)
         prediction, flop_percent, hit_percent  = predict_value(song_features)
         
         flop_percent = round(flop_percent, 2)*100
