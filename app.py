@@ -7,6 +7,9 @@ import db
 db.Base.metadata.create_all(db.engine)
 app = Flask(__name__, template_folder='deploy/template', static_folder='deploy/static')
 
+@app.route("/get_my_ip", methods=["GET"])
+def get_my_ip():
+    return jsonify({'ip': request.environ.get('HTTP_X_REAL_IP', request.remote_addr)}), 200
 
 @app.route('/')
 def index():
@@ -48,7 +51,7 @@ def get_user_song_feedback():
     if request.method == 'POST':
         print("Request received")
         print(request.form)
-        ip_addr = request.environ['REMOTE_ADDR']
+        ip_addr = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
 
         if request.form['song_uri'] == "":
