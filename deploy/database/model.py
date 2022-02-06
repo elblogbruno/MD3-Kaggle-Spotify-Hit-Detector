@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
-from sqlalchemy import Column, Boolean, String, Float, DateTime, Text, Date, Time, asc, func
+from sqlalchemy import Column, Integer, String, Float, DateTime
 # from datetime import datetime
 import os
 import json
@@ -9,6 +9,54 @@ from datetime import *
 def datetime_parser(o):
     if isinstance(o, datetime):
         return o.__str__()
+
+class UserSongFeedback(db.Base):
+    __tablename__ = 'user_song_feedback'
+
+    id = Column(Integer, primary_key=True)
+    song_uri = Column(String(255), nullable=False)
+    song_id = Column(String(255), nullable=False)
+    song_name = Column(String(255), nullable=False)
+    song_artist = Column(String(255), nullable=False)
+    request_user_id = Column(String(255), nullable=False)
+    feedback = Column(Integer, nullable=False)
+    timestamp = Column(DateTime, nullable=False)
+
+    def __init__(self, song_uri, song_id, song_name, song_artist, user_id, feedback):
+        self.song_uri = song_uri
+        self.song_id = song_id
+        self.feedback = feedback
+        self.song_name = song_name
+        self.song_artist = song_artist
+        self.request_user_id = user_id
+        self.timestamp = datetime.now()
+
+    def __repr__(self):
+        return '<UserSongFeedback %r>' % self.song_id
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    @staticmethod
+    def get_feedback_by_user_id(request_user_id):
+        return db.session.query(UserSongFeedback).filter_by(request_user_id=request_user_id).first()
+
+    @staticmethod
+    def get_last_entry():
+        return db.session.query(UserSongFeedback).order_by(UserSongFeedback.timestamp.desc()).first() 
+
+    @staticmethod
+    def get_unique_count():
+        return db.session.query(UserSongFeedback).distinct(UserSongFeedback.song_id).count()
+    
+    @staticmethod
+    def get_unique_count_today():
+        """
+            Gets the unique count of songs added today
+        """
+        today = datetime.now().date()
+        return db.session.query(UserSongFeedback).filter(UserSongFeedback.timestamp.between(today, today + timedelta(days=1))).distinct(UserSongFeedback.song_id).count()
 
 class DataEntry(db.Base):
     __tablename__ = 'data_entries'
@@ -62,3 +110,7 @@ class DataEntry(db.Base):
     @staticmethod
     def get_all():
         return db.session.query(DataEntry).all()
+
+    @staticmethod
+    def get_unique_count():
+        return db.session.query(DataEntry).distinct(DataEntry.id).count()

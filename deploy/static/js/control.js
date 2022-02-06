@@ -120,10 +120,46 @@ function predict(song_uri, song_id, release_date){
     }); 
 }
 
-function like(song_uri, song_id){
-    alert("not available yet");
-}
+function add_feedback(song_uri, song_id, song_name, song_artist, like_dislike){
+    // api request to flask server to get the possible song list for the query
+    console.log("Adding feedback for " + song_uri + " " + song_id + " " + song_name + " " + song_artist + " " + like_dislike);
+    $.ajax({
+        url: '/get_user_song_feedback',
+        dataType: "json",
+        type: "Post",
+        async: true,
+        data: {'song_id': song_id, 'song_uri': song_uri, 'song_artist': song_artist,'feedback': like_dislike, 'song_name': song_name},
+        success: function (data) {
+            document.getElementById('error-message-text').style.display = 'none';
+            console.log(data);
+            
+            document.getElementById(song_id+"-predict-result-text").innerHTML = data['message'];
 
-function dislike(song_uri, song_id){
-    alert("not available yet");
+            // document.getElementById(song_id+"-predict-result-text").innerHTML += " Flop Probability: " + data['flop_percent'] + "%"+ " Hit Probability: " + data['hit_percent'] + "%"; 
+            
+            document.getElementById(song_id+"-agree-button").style.display = 'none';
+            document.getElementById(song_id+"-disagree-button").style.display = 'none';
+            document.getElementById(song_id+"-predict-button").style.display = 'none';
+        },
+        error: function (xhr, exception) {
+            var msg = "";
+            if (xhr.status === 0) {
+                msg = "Not connect.\n Verify Network." + xhr.responseText;
+            } else if (xhr.status == 404) {
+                msg = "Requested page not found. [404]" + xhr.responseText;
+            } else if (xhr.status == 500) {
+                msg = "Internal Server Error [500]." +  xhr.responseText;
+            } else if (exception === "parsererror") {
+                msg = "Requested JSON parse failed.";
+            } else if (exception === "timeout") {
+                msg = "Time out error." + xhr.responseText;
+            } else if (exception === "abort") {
+                msg = "Ajax request aborted.";
+            } else {
+                msg = "Error:" + xhr.status + " " + xhr.responseText;
+            }
+            document.getElementById('error-message-text').style.display = 'block';
+            document.getElementById('error-message-text').textContent = msg;
+        }
+    }); 
 }

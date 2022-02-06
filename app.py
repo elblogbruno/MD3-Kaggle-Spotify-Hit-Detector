@@ -10,8 +10,11 @@ app = Flask(__name__, template_folder='deploy/template', static_folder='deploy/s
 
 @app.route('/')
 def index():
-    entry = DataEntry().get_last_entry()
-    return render_template("index.html", entry=entry)
+    last_user_entry = UserSongFeedback.get_last_entry()
+    unique_count = UserSongFeedback.get_unique_count()
+    unique_count_today = UserSongFeedback.get_unique_count_today()
+    # print (last_user_entry.song_name , unique_count, unique_count_today)
+    return render_template("index.html", last_user_entry=last_user_entry, unique_count_today=unique_count_today, unique_count=unique_count)
 
 """
 View that receives the query from the form and returns the result contacting spotify
@@ -39,6 +42,56 @@ def get_spotify_query_result():
 
         return jsonify(result=result, error=error, index=index)
 
+
+@app.route('/get_user_song_feedback', methods=['POST'])
+def get_user_song_feedback():
+    if request.method == 'POST':
+        print("Request received")
+        print(request.form)
+        ip_addr = request.environ['REMOTE_ADDR']
+
+
+        if request.form['song_uri'] == "":
+            return jsonify({"message": "Please enter a song uri"})
+        else:
+            song_uri = request.form['song_uri']
+
+        if request.form['song_id'] == "":
+            return jsonify({"message": "Please enter a song id"})
+        else:
+            song_id = request.form['song_id']
+        
+        # create unique identifier for the user based on ip addred and song id
+        user_id = ip_addr + song_id 
+        # check if the user has already submitted feedback for this song
+        user_song_feedback = UserSongFeedback.get_feedback_by_user_id(user_id)
+        
+        if user_song_feedback:
+            return jsonify({"message": "You have already submitted feedback for this song"})
+            
+        if 'song_artist' in request.form:
+            song_artist = request.form['song_artist']
+        else:
+            song_artist = ""
+
+        if 'feedback' in request.form:
+            feedback = int(request.form['feedback'])
+        else:
+            feedback = 0
+
+        if 'song_name' in request.form:
+            song_name = request.form['song_name']
+
+        
+
+        # Add feedback to database
+        f = UserSongFeedback(song_uri, song_id, song_name, song_artist, user_id, feedback)
+        f.save()
+
+        return jsonify({"message": "Thank you for your feedback!"})
+
+
+
 @app.route('/get_prediction_for_song', methods=['POST', 'GET'])
 def result():
     if request.method == 'POST':
@@ -52,8 +105,10 @@ def result():
         flop_percent = round(flop_percent, 2)*100
         hit_percent = round(hit_percent, 2)*100
         # save_new_entry(release_date,  song_features, prediction) # Save the new entry in the database
+        
         return jsonify(prediction=str(prediction), flop_percent=str(flop_percent), hit_percent=str(hit_percent))
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5003)
+    #app.run(debug=True, host='0.0.0.0', port=5003)
+    app.run()

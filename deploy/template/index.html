@@ -42,34 +42,30 @@
             </div>
           </div>
           
-          {% if entry %}
+          {% if last_user_entry %}
           <div class="introduction-text">
             <h2>Fancy Some stadistics?</h2>
           </div>
-          <div class="model-stadistics">
-            <div class="model-stadistics-box">
-              <div class="model-stadistics-item">
-                <p>Songs Added</p>
-                <p id="recall">{{ entry.model_updated_new_songs_number }} new songs added </p>
-              </div>
-              <div class="model-stadistics-item">
-                <p>Accuracy</p>
-                <p id="accuracy">{{ entry.model_updated_accuracy }} %</p>
-              </div>
-              <div class="model-stadistics-item">
-                <p>Precision</p>
-                <p id="precision">{{ entry.model_updated_precission }} %</p>
-              </div>
-              <div class="model-stadistics-item">
-                <p>Recall</p>
-                <p id="recall">{{ entry.model_updated_recall }} %</p>
-              </div>
-              <div class="model-stadistics-item">
-                <p>F1 Score</p>
-                <p id="recall">{{ entry.model_updated_f1_score }} %</p>
-              </div>
-            </div> 
-          </div> 
+
+          <p>
+            {{ unique_count }} songs predicted since this website was born!
+          </p>
+          
+          <p>
+            {{ unique_count_today }} songs predicted today!
+          </p>
+
+          <div>
+            <h2> Last predicted song </h2>
+            <div>
+              <p class="item-title">
+                {{ last_user_entry.song_name|safe }} 
+              </p>
+              <p class="item-subtitle">
+                {{ last_user_entry.song_artist|safe }}   
+              </p>
+            </div>
+          </div>
           {% endif %}
         </div>
       </section>

@@ -44,6 +44,8 @@ function listItem() {
 
         var href = this.href;
         var id = this.id;
+        var title_val = this.title;
+        var subtitle_val = this.subtitle;
         var release_date = this.release_date;
         predictButton.onclick = function() { predict(href, id, release_date); }
         
@@ -52,14 +54,14 @@ function listItem() {
         agreeButton.className = "ui-prediction-button";
         agreeButton.id = this.id+"-agree-button";
         agreeButton.innerHTML = "<i class='fa fa-thumbs-up'> Agree</i>";
-        agreeButton.onclick = function() { like(href, id); }
+        agreeButton.onclick = function() { add_feedback(href, id, title_val, subtitle_val, 1); }
 
         var disagreeButton = document.createElement("button");
         disagreeButton.style.display = "none";
         disagreeButton.className = "ui-prediction-button";
         disagreeButton.id = this.id+"-disagree-button";
         disagreeButton.innerHTML = "<i class='fa fa-thumbs-down'> Disagree</i>";
-        disagreeButton.onclick = function() { dislike(href, id); }
+        disagreeButton.onclick = function() { add_feedback(href, id, title_val, subtitle_val, 0); }
 
 
 
